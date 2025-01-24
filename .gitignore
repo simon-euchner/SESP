@@ -1,0 +1,7 @@
+*.o
+*.so
+*.out
+/tst.d/*.den
+/tst.d/*.coo
+/tst.d/*.csr
+/tst.d/*.csc

@@ -1,0 +1,221 @@
+o ---------------------------------------------------------------------------- o
+| Documentation                                                                |
+o ---------------------------------------------------------------------------- o
+
+
+LICENSE NOTICE.
+
+    LICENSE: GPL-3.0
+
+    IMPORTANT: THIS IS FREE SOFTWARE WITHOUT ANY WARRANTY. THE USER IS FREE TO
+               MODIFY AND REDISTRIBUTE THIS SOFTWARE UNDER THE TERMS OF THE
+               LICENSE LISTED ABOVE PUBLISHED BY THE FREE SOFTWARE FOUNDATION.
+               THE PUBLISHER, SIMON EUCHNER, IS NOT RESPONSIBLE FOR ANY NEGATIVE
+               EFFECTS THIS SOFTWARE MAY CAUSE.
+
+
+--- Settings / Generalities ----------------------------------------------------
+
+    For use of the library, solely the header *inc.d/sesp.h* must be included.
+
+    The data type for matrix data and indices may be set in *sesp.h*. Moreover,
+    the variable *SMALL* can be set, defining the maximal precision, which
+    should be slightly larger than the machine epsilon.
+
+    IMPORTANT: The integer type for indices must be large enough to hold
+               numbers of size *number of rows* x *number of columns* for each
+               matrix. As uint64_t maximally represents ~1E19, make sure for
+               square matrices the number of (hypothetical) entries is less than
+               ~ 10E9 x 10E9.
+--------------------------------------------------------------------------------
+
+
+--- Matrix Types ---------------------------------------------------------------
+
+    IMPORTANT: Please read this section carefully to ensure that data is given
+               to the various matrix formats correctly. For initializing CSC and
+               CSR directly, it is important that column/row indices are sorted
+               in ascending order (i.e. COLUMN-MAJOR/ROW-MAJOR).
+
+    sesp_den : Dense matrix format (DEN); *data* must be ROW-MAJOR
+    sesp_coo : Co-ordinate sparse matrix format (COO); *data* must be ROW-MAJOR
+    sesp_csr : Compressed sparse row format (CSR); *data* is ROW-MAJOR
+    sesp_csc : Compressed sparse column format (CSC); *data* is COLUMN-MAJOR
+
+    Notes. 
+
+        * For each type there is a function for allocating memory and freeing
+          it:
+              *sesp_<type>_alloc* and *sesp_<type>_free*
+
+        * If *nnz = 0* the data and according index attributes will be NULL
+          pointers.
+
+        * For better performance it is the callers responsibility to fill the
+          data and index/pointer arrays with the correct number of elements.
+--------------------------------------------------------------------------------
+
+
+--- Conversions ----------------------------------------------------------------
+
+    IMPORTANT: All conversion functions free their argument and return a pointer
+               owned by the caller.
+
+    sesp_den_tocoo
+    sesp_coo_tocsr
+    sesp_csr_tocoo
+    sesp_coo_toden
+    sesp_csc_tocoo
+    sesp_csc_tocsr
+    sesp_csc_tocoo
+    sesp_csc_tocoo
+    sesp_den_tocsr
+    sesp_csr_toden
+    sesp_den_tocsc
+    sesp_csc_toden
+
+    Notes.
+
+        * Conversions can be computationally quite costly, so keep them to a
+          minimum for efficient code.
+--------------------------------------------------------------------------------
+
+
+--- Copy -----------------------------------------------------------------------
+
+    sesp_den_copy
+    sesp_coo_copy
+    sesp_csr_copy
+    sesp_csc_copy
+
+    Notes.
+
+        * The returned pointer is owned by the caller.
+--------------------------------------------------------------------------------
+
+
+--- Print ----------------------------------------------------------------------
+
+    sesp_den_print
+    sesp_coo_print
+    sesp_csr_print
+    sesp_csc_print
+
+    Notes.
+
+        * Before printing, CSC and CSR are converted to COO.
+--------------------------------------------------------------------------------
+
+
+--- Save and Load --------------------------------------------------------------
+
+    IMPORTANT: There will not be an error message if the file format for loading
+               is wrong, it is the users responsibility to check the loaded
+               matrix for errors.
+
+    sesp_den_save : 11 significant digits are stored
+    sesp_coo_save : "
+    sesp_csr_save : "
+    sesp_csc_save : "
+
+    sesp_den_load : Significant digits defined by DTYPE
+    sesp_coo_load : "
+    sesp_csr_load : "
+    sesp_csc_load : "
+
+    Notes.
+
+        * To see how a file should be formatted in order to load a matrix,
+          please write a matrix to a file using the *save* functions and follow
+          the structure of the generated file carefully.
+--------------------------------------------------------------------------------
+
+
+--- Operations -----------------------------------------------------------------
+
+    IMPORTANT: Functions work mostly in place. If not, do not overwrite the
+               argument pointer with the returned one, because then you lost
+               access to some ALLOCATED memory.
+
+    Scalar Multiplication
+
+        sesp_scal_den : In-place, A -> alpha * A
+        sesp_scal_coo : "
+        sesp_scal_csr : "
+        sesp_scal_csc : "
+
+    Matrix Vector Dot Product
+
+        sesp_den_mvdot_arr : In-place for array, w -> w + A * v
+        sesp_csr_mvdot_arr : "
+
+    Matrix Addition
+
+        sesp_den_add : Not in-place, result is returned, owned by caller
+        sesp_coo_add : "
+        sesp_csr_add : "
+        sesp_csc_add : "
+
+    Matrix Multiplication
+
+        sesp_den_mmdot_den : Not in-place, result is returned, owned by caller
+        sesp_csr_mmdot_csc : "
+
+    Transposition
+
+        sesp_den_t : In-place with result being of type DEN; argument is freed
+        sesp_coo_t : "                                  COO; "
+        sesp_csr_t : "                                  CSC; "
+        sesp_csc_t : "                                  CSR; "
+
+    Complex Conjugation
+
+        sesp_den_cc : In-place
+        sesp_coo_cc : "
+        sesp_csr_cc : "
+        sesp_csc_cc : "
+
+    Kronecker Product
+
+        sesp_coo_kron_coo : Not in-place, result is returned, owned by caller
+
+    Notes.
+
+        * *arr* is shorthand for a pointer pointing to the first element of an
+          array.
+
+        * Only efficient operations are implemented, so if e.g. a product of a
+          CSR with a CSR matrix is desired, the user must use conversion
+          functions first.
+
+        * Functions work mostly *in-place*. Of course, there always are the copy
+          functions to effectively change this behaviour. Information on what
+          arguments are overwritten is given after the function name in the list
+          presented above. Please also check the *inc.d/sesp.h* for more
+          information and in particular *const* qualifiers.
+
+        * All operations keep the data of the matrix types in correct order,
+          e.g. after transposition of a dense matrix, the result is still
+          ROW-MAJOR ordered. So all matrices are always kept in canonical form.
+--------------------------------------------------------------------------------
+
+
+--- Clean Up -------------------------------------------------------------------
+
+    IMPORTANT: If the tolerance for cleaning up is smaller than SMALL
+               (including negative), entries will be selected using SMALL
+               without throwing a warning.
+
+    sesp_coo_clean : Argument is freed; result owned by caller
+    sesp_csr_clean : "
+    sesp_csc_clean : "
+
+    Notes.
+
+        * The first argument is the matrix which is altered in-place. The
+          second argument of type *long double* should be a positive number. All
+          entries with magnitude less than this number are removed.
+
+        * The functions return a new matrix which is the result and the argument
+          is freed internally.
+--------------------------------------------------------------------------------
