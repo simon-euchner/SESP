@@ -30,7 +30,7 @@ SRC = ./src.d
 OBJ = ./obj.d
 LIB = ./lib.d
 
-# Target (binary *calendar*)
+# Target (library *sesp*)
 TARGET = ${LIB}/libsesp.so
 
 # Define file names
