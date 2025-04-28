@@ -23,7 +23,7 @@
 
 
 sesp_coo *sesp_coo_kron(const sesp_coo *A, const sesp_coo *B) {
-    INT nnz, k, l, m;
+    SESP_INT nnz, k, l, m;
     sesp_coo *C, *Bcpy;
     nnz = A->nnz*B->nnz;
     C = sesp_coo_alloc(A->nrow*B->nrow, A->ncol*B->ncol, nnz);

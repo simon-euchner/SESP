@@ -35,25 +35,25 @@
 #define SMALL 1e-13
 
 // Maximal data types for matrix entries, indices and the real part of entries
-typedef long double complex DTYPE_M;
-typedef long double REAL_M;
-typedef uint64_t INT_M;
+typedef long double complex SESP_MAXDTYPE;
+typedef long double SESP_MAXREAL;
+typedef uint64_t SESP_MAXINT;
 
 /* Data type for matrix entries                                               *
  * Options:                                                                   *
  *     float, double, long double,                                            *
  *     float complex, double complex, long double complex                     */
-typedef double complex DTYPE;
+typedef double complex SESP_DTYPE;
 
 /* Data type matrix indices                                                   *
  * Options: All unsigned integers smaller or equal to uint64_t                */
-typedef uint32_t INT;
+typedef uint32_t SESP_INT;
 
 // Data type for *qsort*
 typedef struct _qsort_data {
-    INT a;
-    INT b;
-    DTYPE c;
+    SESP_INT a;
+    SESP_INT b;
+    SESP_DTYPE c;
 } qsort_data;
 /* -------------------------------------------------------------------------- */
 
@@ -62,56 +62,56 @@ typedef struct _qsort_data {
 
 // Dense matrix format (DEN)
 typedef struct _sesp_den {
-    INT nrow;       // Number of rows
-    INT ncol;       // Number of columns
-    INT nnz;        // Number of non-zero elements
-    double density; // Density, number in [0, 1]
-    DTYPE *data;    // Matrix entries
+    SESP_INT nrow;       // Number of rows
+    SESP_INT ncol;       // Number of columns
+    SESP_INT nnz;        // Number of non-zero elements
+    double density;      // Density, number in [0, 1]
+    SESP_DTYPE *data;    // Matrix entries
 } sesp_den;
 
 // Co-ordinate sparse matrix format (COO)
 typedef struct _sesp_coo {
-    INT nrow;
-    INT ncol;
-    INT nnz;
+    SESP_INT nrow;
+    SESP_INT ncol;
+    SESP_INT nnz;
     double density;
-    INT *rowis;     // Row indices
-    INT *colis;     // Column indices
-    DTYPE *data;
+    SESP_INT *rowis;     // Row indices
+    SESP_INT *colis;     // Column indices
+    SESP_DTYPE *data;
 } sesp_coo;
 
 // Compressed sparse row matrix format (CSR)
 typedef struct _sesp_csr {
-    INT nrow;
-    INT ncol;
-    INT nnz;
+    SESP_INT nrow;
+    SESP_INT ncol;
+    SESP_INT nnz;
     double density;
-    INT *rowps;     // Row pointers
-    INT *colis;
-    DTYPE *data;
+    SESP_INT *rowps;     // Row pointers
+    SESP_INT *colis;
+    SESP_DTYPE *data;
 } sesp_csr;
 
 // Compressed sparse column matrix format (CSC)
 typedef struct _sesp_csc {
-    INT nrow;
-    INT ncol;
-    INT nnz;
+    SESP_INT nrow;
+    SESP_INT ncol;
+    SESP_INT nnz;
     double density;
-    INT *rowis;
-    INT *colps; // Column pointers
-    DTYPE *data;
+    SESP_INT *rowis;
+    SESP_INT *colps; // Column pointers
+    SESP_DTYPE *data;
 } sesp_csc;
 /* -------------------------------------------------------------------------- */
 
 
 /* --- Memory Management ---------------------------------------------------- */
-sesp_den *sesp_den_alloc(INT, INT);
+sesp_den *sesp_den_alloc(SESP_INT, SESP_INT);
 void sesp_den_free(sesp_den *);
-sesp_coo *sesp_coo_alloc(INT, INT, INT);
+sesp_coo *sesp_coo_alloc(SESP_INT, SESP_INT, SESP_INT);
 void sesp_coo_free(sesp_coo *);
-sesp_csr *sesp_csr_alloc(INT, INT, INT);
+sesp_csr *sesp_csr_alloc(SESP_INT, SESP_INT, SESP_INT);
 void sesp_csr_free(sesp_csr *);
-sesp_csc *sesp_csc_alloc(INT, INT, INT);
+sesp_csc *sesp_csc_alloc(SESP_INT, SESP_INT, SESP_INT);
 void sesp_csc_free(sesp_csc *);
 /* -------------------------------------------------------------------------- */
 
@@ -162,12 +162,12 @@ sesp_csc *sesp_csc_load(const char *);
 
 
 /* --- Operations ----------------------------------------------------------- */
-void sesp_den_scal(DTYPE, sesp_den *);
-void sesp_coo_scal(DTYPE, sesp_coo *);
-void sesp_csr_scal(DTYPE, sesp_csr *);
-void sesp_csc_scal(DTYPE, sesp_csc *);
-void sesp_den_mvdot_arr(const sesp_den *, const DTYPE *, DTYPE *);
-void sesp_csr_mvdot_arr(const sesp_csr *, const DTYPE *, DTYPE *);
+void sesp_den_scal(SESP_DTYPE, sesp_den *);
+void sesp_coo_scal(SESP_DTYPE, sesp_coo *);
+void sesp_csr_scal(SESP_DTYPE, sesp_csr *);
+void sesp_csc_scal(SESP_DTYPE, sesp_csc *);
+void sesp_den_mvdot_arr(const sesp_den *, const SESP_DTYPE *, SESP_DTYPE *);
+void sesp_csr_mvdot_arr(const sesp_csr *, const SESP_DTYPE *, SESP_DTYPE *);
 sesp_den *sesp_den_add_den(const sesp_den *, const sesp_den *);
 sesp_csr *sesp_csr_add_csr(const sesp_csr *, const sesp_csr *);
 sesp_csc *sesp_csc_add_csc(sesp_csc *, sesp_csc *);
@@ -205,20 +205,29 @@ sesp_csc *sesp_csc_clean(sesp_csc *, long double);
  * give more control over memory management, if needed. Sticking with the     *
  * implemented functions is fine in most cases and absolutely reasonable.     */
 
-void print_header(const char *, INT, INT, INT, double);
+void print_header(const char *, SESP_INT, SESP_INT, SESP_INT, double);
 void print_sparse(const sesp_coo *, const char *);
-int check_valid(INT, INT, INT);
+int check_valid(SESP_INT, SESP_INT, SESP_INT);
 int cmp(const void *, const void *);
-void filetop(FILE *, const char *, INT, INT, INT, double);
-INT sesp_csr_xpAi(const sesp_csr *, DTYPE *, INT, INT *, INT *);
-void cc(DTYPE *, INT);
+void filetop(FILE *,
+             const char *,
+             SESP_INT,
+             SESP_INT,
+             SESP_INT,
+             double);
+SESP_INT sesp_csr_xpAi(const sesp_csr *,
+                        SESP_DTYPE *,
+                        SESP_INT,
+                        SESP_INT *,
+                        SESP_INT *);
+void cc(SESP_DTYPE *, SESP_INT);
 int sesp_den_tocoo_worker(const sesp_den *, sesp_coo *);
 void sesp_coo_tocsr_worker(const sesp_coo *, sesp_csr *);
 void sesp_csr_tocoo_worker(const sesp_csr *, sesp_coo *);
 void sesp_coo_toden_worker(const sesp_coo *A, sesp_den *B);
 void sesp_csc_tocoo_worker(sesp_coo *);
 void sesp_coo_tocsc_worker(const sesp_coo *, sesp_csc *);
-void skip_lines(FILE *, INT);
+void skip_lines(FILE *, SESP_INT);
 /* -------------------------------------------------------------------------- */
 
 #endif

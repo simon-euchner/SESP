@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     (void)argc; (void)argv;
 
     sesp_den *A = sesp_den_alloc(2, 3);
-    for (INT k=0; k<6; A->data[k++] = (DTYPE)0.);
+    for (SESP_INT k=0; k<6; A->data[k++] = (SESP_DTYPE)0.);
     A->data[1] = .0001;
     sesp_csc *B = sesp_den_tocsc(A);
     sesp_csc_print(B);

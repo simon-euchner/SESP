@@ -22,7 +22,7 @@
 #include "../inc.d/sesp.h"
 
 
-sesp_csc *sesp_csc_clean(sesp_csc *A, REAL_M epsilon) {
+sesp_csc *sesp_csc_clean(sesp_csc *A, SESP_MAXREAL epsilon) {
     sesp_coo *B = sesp_csc_tocoo(A);
     return sesp_coo_tocsc(sesp_coo_clean(B, epsilon));
 }

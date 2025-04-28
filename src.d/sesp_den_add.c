@@ -23,7 +23,7 @@
 
 
 sesp_den *sesp_den_add(const sesp_den *A, const sesp_den *B) {
-    INT i; sesp_den *C;
+    SESP_INT i; sesp_den *C;
     if ( (A->nrow != B->nrow) || (A->ncol != B->ncol) ) {
         printf("%s\n", "SESP: Shape mismatch in *sesp_den_add_den*");
         exit(1);

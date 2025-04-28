@@ -32,26 +32,26 @@ sesp_den *sesp_den_load(const char *file) {
     }
 
     // Read matrix structure parameters
-    INT n, nrow, ncol;
+    SESP_INT n, nrow, ncol;
     char line[100];
     skip_lines(fd, 2);
     (void)fgets(line, sizeof(line), fd);
     (void)sscanf(line,
                  "SHAPE: %lu x %lu\n",
-                 (INT_M *)&nrow,
-                 (INT_M *)&ncol);
+                 (SESP_MAXINT *)&nrow,
+                 (SESP_MAXINT *)&ncol);
 
     // Allocate memory
-    sesp_den *A = sesp_den_alloc((INT)nrow, (INT)ncol);
+    sesp_den *A = sesp_den_alloc((SESP_INT)nrow, (SESP_INT)ncol);
 
     // Load matrix data
-    REAL_M a, b;
-    INT_M r, c;
+    SESP_MAXREAL a, b;
+    SESP_MAXINT r, c;
     skip_lines(fd, 5);
     for (n=0; n<nrow*ncol; n++) {
         (void)fgets(line, sizeof(line), fd);
         (void)sscanf(line, "%lu %lu %Lf %Lf\n", &r, &c, &a, &b);
-        A->data[n] = (DTYPE)(a+b*I);
+        A->data[n] = (SESP_DTYPE)(a+b*I);
     }
 
     // Cleanup

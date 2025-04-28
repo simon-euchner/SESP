@@ -22,14 +22,14 @@
 #include "../inc.d/sesp.h"
 
 
-static void load_data(INT, INT, const sesp_coo *, sesp_coo *);
+static void load_data(SESP_INT, SESP_INT, const sesp_coo *, sesp_coo *);
 
 
 sesp_coo *sesp_coo_add(const sesp_coo *A, const sesp_coo *B) {
 
     // Declarations
-    INT nnz, kA, kB;
-    DTYPE sum;
+    SESP_INT nnz, kA, kB;
+    SESP_DTYPE sum;
     sesp_coo *C;
 
     // Check dimensions
@@ -64,7 +64,7 @@ getB:
         if (A->rowis[kA] == B->rowis[kB]) {
             if (A->colis[kA] == B->colis[kB]) {
                 sum = A->data[kA] + B->data[kB++];
-                if (cabsl((DTYPE_M)sum) < SMALL) { kA++; continue; }
+                if (cabsl((SESP_MAXDTYPE)sum) < SMALL) { kA++; continue; }
                 load_data(nnz++, kA++, A, C); continue;
             }
             if (A->colis[kA] < B->colis[kB]) {
@@ -80,9 +80,9 @@ getB:
     // Reallocate to (hopefully) smaller size than worst case nnz
     C->nnz = nnz; C->density = (double)nnz/(double)(C->nrow*C->ncol);
     if (C->nnz) {
-        C->rowis = realloc(C->rowis, sizeof(INT)*nnz);
-        C->colis = realloc(C->colis, sizeof(INT)*nnz);
-        C->data = realloc(C->data, sizeof(DTYPE)*nnz);
+        C->rowis = realloc(C->rowis, sizeof(SESP_INT)*nnz);
+        C->colis = realloc(C->colis, sizeof(SESP_INT)*nnz);
+        C->data = realloc(C->data, sizeof(SESP_DTYPE)*nnz);
     } else {
         C->rowis = NULL;
         C->colis = NULL;
@@ -92,7 +92,10 @@ getB:
     return C;
 }
 
-static void load_data(INT nnz, INT k, const sesp_coo *A, sesp_coo *B) {
+static void load_data(SESP_INT nnz,
+                      SESP_INT k,
+                      const sesp_coo *A,
+                      sesp_coo *B) {
     B->rowis[nnz] = A->rowis[k];
     B->colis[nnz] = A->colis[k];
     B->data[nnz] = A->data[k];

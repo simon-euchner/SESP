@@ -24,7 +24,7 @@
 
 // Save CSC
 void sesp_csc_save(const char *file, const sesp_csc *A) {
-    FILE *fd; INT k, max;
+    FILE *fd; SESP_INT k, max;
     if (!(fd = fopen(file, "w"))) {
         printf("SESP: Cannot open file *%s* for writing\n", file);
         exit(1);
@@ -41,8 +41,8 @@ void sesp_csc_save(const char *file, const sesp_csc *A) {
         if ((k<A->nnz) && (k<A->ncol+1)) {
             fprintf(fd,
                     "%19lu %19lu %+1.10E %+1.10E\n",
-                    (INT_M)A->rowis[k],
-                    (INT_M)A->colps[k],
+                    (SESP_MAXINT)A->rowis[k],
+                    (SESP_MAXINT)A->colps[k],
                     creal(A->data[k]),
                     cimag(A->data[k]));
             continue;
@@ -50,13 +50,13 @@ void sesp_csc_save(const char *file, const sesp_csc *A) {
         if ((k>=A->nnz) && (k<A->ncol+1)) {
             fprintf(fd,
                     "                    %19lu\n",
-                    (INT_M)A->colps[k]);
+                    (SESP_MAXINT)A->colps[k]);
             continue;
         }
         if ((k<A->nnz) && (k>=A->ncol+1)) {
             fprintf(fd,
                     "%19lu                     %+1.10E %+1.10E\n",
-                    (INT_M)A->rowis[k],
+                    (SESP_MAXINT)A->rowis[k],
                     creal(A->data[k]),
                     cimag(A->data[k]));
             continue;

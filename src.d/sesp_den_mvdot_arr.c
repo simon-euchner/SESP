@@ -23,8 +23,8 @@
 
 
 // w -> w + A * v
-void sesp_den_mvdot_arr(const sesp_den *A, const DTYPE *v, DTYPE *w) {
-    INT i, j;
+void sesp_den_mvdot_arr(const sesp_den *A, const SESP_DTYPE *v, SESP_DTYPE *w) {
+    SESP_INT i, j;
     for (i=0; i<A->nrow; i++) {
         for (j=0; j<A->ncol; j++) {
             w[i] += A->data[i*A->ncol+j] * v[j];

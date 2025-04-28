@@ -25,13 +25,13 @@
 // Write header to file
 void filetop(FILE *fd,
              const char *fmt,
-             INT nrow,
-             INT ncol,
-             INT nnz,
+             SESP_INT nrow,
+             SESP_INT ncol,
+             SESP_INT nnz,
              double density) {
     fprintf(fd, "%s\n", "SESP");
     fprintf(fd, "FROMAT: %s\n", fmt);
-    fprintf(fd, "SHAPE: %lu x %lu\n", (INT_M)nrow, (INT_M)ncol);
-    fprintf(fd, "NNZ: %lu\n", (INT_M)nnz);
+    fprintf(fd, "SHAPE: %lu x %lu\n", (SESP_MAXINT)nrow, (SESP_MAXINT)ncol);
+    fprintf(fd, "NNZ: %lu\n", (SESP_MAXINT)nnz);
     fprintf(fd, "DENSITY: %d %c\n\n", (int)(100*density), 37);
 }

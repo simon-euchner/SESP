@@ -25,8 +25,8 @@
 sesp_csr *sesp_csr_add(const sesp_csr *A, const sesp_csr *B) {
 
     // Declarations
-    INT nnz, i, j, k, l, m, n, lA, lB, wrm, wcn, nnzcpy;
-    REAL_M x;
+    SESP_INT nnz, i, j, k, l, m, n, lA, lB, wrm, wcn, nnzcpy;
+    SESP_MAXREAL x;
     int nonzero;
     sesp_csr *C;
 
@@ -48,7 +48,7 @@ sesp_csr *sesp_csr_add(const sesp_csr *A, const sesp_csr *B) {
 
     // Allocate memory for working row-vector
     sesp_coo *w = sesp_coo_alloc(A->ncol, A->ncol, A->ncol);
-    for (i=0; i<A->ncol; w->data[i++] = (DTYPE)0.);
+    for (i=0; i<A->ncol; w->data[i++] = (SESP_DTYPE)0.);
     for (i=0; i<A->ncol; i++) w->rowis[i] = w->colis[i] = 0;
 
     // Fill arrays of C adding row by row
@@ -63,7 +63,7 @@ sesp_csr *sesp_csr_add(const sesp_csr *A, const sesp_csr *B) {
                 if (wrm < wcn) { C->colis[l] = wrm; wrm = 0; m++; goto end;}
                 if (wrm > wcn) { C->colis[l] = wcn; wcn = 0; n++; goto end;}
                 if (wrm == wcn) { // Here it may happen that the entry is zero
-                    x = cabsl((DTYPE_M)w->data[wrm]);
+                    x = cabsl((SESP_MAXDTYPE)w->data[wrm]);
                     if (x < SMALL) {
                         nonzero = 0; nnz--;
                     } else {
@@ -88,15 +88,17 @@ end:
 
         // Load data into C
         for (j=C->rowps[i]; j<nnz; j++) {
-            k = C->colis[j]; C->data[j] = w->data[k]; w->data[k] = (DTYPE)0.;
+            k = C->colis[j];
+            C->data[j] = w->data[k];
+            w->data[k] = (SESP_DTYPE)0.;
         }
     }
     C->nnz = nnz; sesp_coo_free(w);
 
     // Reallocate to (hopefully) less than worst case size of C
     if (nnz) {
-        C->colis = (INT *)realloc(C->colis, sizeof(INT)*nnz);
-        C->data = (DTYPE *)realloc(C->data, sizeof(DTYPE)*nnz);
+        C->colis = (SESP_INT *)realloc(C->colis, sizeof(SESP_INT)*nnz);
+        C->data = (SESP_DTYPE *)realloc(C->data, sizeof(SESP_DTYPE)*nnz);
     } else {
         C->colis = NULL;
         C->data = NULL;

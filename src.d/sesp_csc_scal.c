@@ -23,11 +23,11 @@
 
 
 // A -> alpha * A
-void sesp_csc_scal(DTYPE alpha, sesp_csc *A) {
-    if (cabsl((DTYPE_M)alpha) < SMALL) {
+void sesp_csc_scal(SESP_DTYPE alpha, sesp_csc *A) {
+    if (cabsl((SESP_MAXDTYPE)alpha) < SMALL) {
         free(A->rowis); free(A->data); A->rowis = NULL; A->data = NULL;
-        for (INT k=0; k<A->ncol+1; A->colps[k++] = (INT)0);
+        for (SESP_INT k=0; k<A->ncol+1; A->colps[k++] = (SESP_INT)0);
     } else {
-        for (INT k=0; k<A->nnz; k++) A->data[k] *= alpha;
+        for (SESP_INT k=0; k<A->nnz; k++) A->data[k] *= alpha;
     }
 }

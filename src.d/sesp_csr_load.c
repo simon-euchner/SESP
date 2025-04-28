@@ -32,22 +32,22 @@ sesp_csr *sesp_csr_load(const char *file) {
     }
 
     // Read matrix structure parameters
-    INT n, nrow, ncol, nnz, nmax;
+    SESP_INT n, nrow, ncol, nnz, nmax;
     char line[100];
     skip_lines(fd, 2);
     (void)fgets(line, sizeof(line), fd);
     n = sscanf(line, "SHAPE: %lu x %lu\n",
-               (INT_M *)&nrow,
-               (INT_M *)&ncol);
+               (SESP_MAXINT *)&nrow,
+               (SESP_MAXINT *)&ncol);
     (void)fgets(line, sizeof(line), fd);
-    (void)sscanf(line, "NNZ: %lu\n", (INT_M *)&nnz);
+    (void)sscanf(line, "NNZ: %lu\n", (SESP_MAXINT *)&nnz);
 
     // Allocate memory
-    sesp_csr *A = sesp_csr_alloc((INT)nrow, (INT)ncol, (INT)nnz);
+    sesp_csr *A = sesp_csr_alloc((SESP_INT)nrow, (SESP_INT)ncol, (SESP_INT)nnz);
 
     // Load matrix data
-    REAL_M a, b;
-    INT_M r, c;
+    SESP_MAXREAL a, b;
+    SESP_MAXINT r, c;
     skip_lines(fd, 4);
     if (nnz > nrow+1) { nmax = nnz; } else { nmax = nrow+1; }
     for (n=0; n<nmax; n++) {
@@ -55,16 +55,16 @@ sesp_csr *sesp_csr_load(const char *file) {
         if (n < nrow+1) {
             if (n < nnz) {
                 (void)sscanf(line, "%lu %lu %Lf %Lf\n", &r, &c, &a, &b);
-                A->colis[n] = (INT)c;
-                A->data[n] = (DTYPE)(a+b*I);
+                A->colis[n] = (SESP_INT)c;
+                A->data[n] = (SESP_DTYPE)(a+b*I);
             } else {
                 (void)sscanf(line, "%lu\n", &r);
             }
-            A->rowps[n] = (INT)r;
+            A->rowps[n] = (SESP_INT)r;
         } else {
             (void)sscanf(line, "%lu %Lf %Lf\n", &c, &a, &b);
-            A->colis[n] = (INT)c;
-            A->data[n] = (DTYPE)(a+b*I);
+            A->colis[n] = (SESP_INT)c;
+            A->data[n] = (SESP_DTYPE)(a+b*I);
         }
     }
 

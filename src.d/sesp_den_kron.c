@@ -23,7 +23,7 @@
 
 
 sesp_den *sesp_den_kron(const sesp_den *A, const sesp_den *B) {
-    INT iA, jA, iB, jB, k;
+    SESP_INT iA, jA, iB, jB, k;
     sesp_den *C, *Bcpy = NULL;
     C = sesp_den_alloc(A->nrow*B->nrow, A->ncol*B->ncol);
     for (iA=0; iA<A->nrow; iA++) {

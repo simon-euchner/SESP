@@ -31,7 +31,7 @@ sesp_den *sesp_coo_toden(sesp_coo *A) {
 
 // Conversion COO to DEN worker
 void sesp_coo_toden_worker(const sesp_coo *A, sesp_den *B) {
-    INT k;
+    SESP_INT k;
     for (k=0; k<A->nrow*A->ncol; B->data[k++] = 0.+0.*I);
     for (k=0; k<A->nnz; k++)
         B->data[A->rowis[k]*A->ncol+A->colis[k]] = A->data[k];

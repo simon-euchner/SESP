@@ -23,8 +23,8 @@
 
 
 void sesp_den_t(sesp_den *A) {
-    INT i, j; DTYPE *data;
-    data = (DTYPE *)malloc(sizeof(DTYPE)*A->nnz);
+    SESP_INT i, j; SESP_DTYPE *data;
+    data = (SESP_DTYPE *)malloc(sizeof(SESP_DTYPE)*A->nnz);
     for (i=0; i<A->nrow; i++) {
         for (j=0; j<A->ncol; j++) {
             data[j*A->nrow+i] = A->data[i*A->ncol+j];

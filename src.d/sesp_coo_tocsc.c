@@ -33,7 +33,7 @@ sesp_csc *sesp_coo_tocsc(sesp_coo *A) {
     B->density = A->density;
     B->rowis = A->rowis;
     B->data = A->data;
-    B->colps = (INT *)malloc(sizeof(INT)*(B->ncol+1));
+    B->colps = (SESP_INT *)malloc(sizeof(SESP_INT)*(B->ncol+1));
     if (!(B->colps))
         printf("%s\n", "SESP: Requested memory cannot be allocated");
 
@@ -51,7 +51,7 @@ sesp_csc *sesp_coo_tocsc(sesp_coo *A) {
 void sesp_coo_tocsc_worker(const sesp_coo *A, sesp_csc *B) {
 
     // Declarations
-    INT k, l;
+    SESP_INT k, l;
 
     // Convert data of A to Column-Major
     if (A->nnz) {

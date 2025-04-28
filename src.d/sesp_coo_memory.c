@@ -23,7 +23,7 @@
 
 
 // Allocator for COO
-sesp_coo *sesp_coo_alloc(INT nrow, INT ncol, INT nnz) {
+sesp_coo *sesp_coo_alloc(SESP_INT nrow, SESP_INT ncol, SESP_INT nnz) {
 
     // Input sanity check
     if (check_valid(nrow, ncol, nnz)) {
@@ -41,13 +41,13 @@ sesp_coo *sesp_coo_alloc(INT nrow, INT ncol, INT nnz) {
     A->density = (double)nnz/(double)(nrow*ncol);
 
     // Allocate memory
-    INT *rowis;
-    INT *colis;
-    DTYPE *data;
+    SESP_INT *rowis;
+    SESP_INT *colis;
+    SESP_DTYPE *data;
     if (nnz > 0) {
-        rowis = (INT *)malloc(sizeof(INT)*A->nnz);
-        colis = (INT *)malloc(sizeof(INT)*A->nnz);
-        data = (DTYPE *)malloc(sizeof(DTYPE)*A->nnz);
+        rowis = (SESP_INT *)malloc(sizeof(SESP_INT)*A->nnz);
+        colis = (SESP_INT *)malloc(sizeof(SESP_INT)*A->nnz);
+        data = (SESP_DTYPE *)malloc(sizeof(SESP_DTYPE)*A->nnz);
         if (!(rowis && colis && data)) {
             printf("%s\n", "SESP: Requested memory cannot be allocated");
             exit(1);

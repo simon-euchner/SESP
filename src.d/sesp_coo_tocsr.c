@@ -25,7 +25,7 @@
 // Conversion COO -> CSR
 sesp_csr *sesp_coo_tocsr(sesp_coo *A) {
     sesp_csr *B = (sesp_csr *)malloc(sizeof(sesp_csr));
-    B->rowps = (INT *)malloc(sizeof(INT)*(A->nrow+1));
+    B->rowps = (SESP_INT *)malloc(sizeof(SESP_INT)*(A->nrow+1));
     if (!(B->rowps))
         printf("%s\n", "SESP: Requested memory cannot be allocated");
     sesp_coo_tocsr_worker(A, B);
@@ -35,7 +35,7 @@ sesp_csr *sesp_coo_tocsr(sesp_coo *A) {
 
 // Conversion COO to CSR worker
 void sesp_coo_tocsr_worker(const sesp_coo *A, sesp_csr *B) {
-    INT k, l;
+    SESP_INT k, l;
     B->nrow = A->nrow;
     B->ncol = A->ncol;
     B->nnz = A->nnz;

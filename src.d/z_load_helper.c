@@ -21,8 +21,8 @@
 #include "../inc.d/sesp.h"
 
 // Move to file descriptor *n* lines down, if possible; else, move to EOF
-void skip_lines(FILE *fd, INT n) {
-    INT m = 0;
+void skip_lines(FILE *fd, SESP_INT n) {
+    SESP_INT m = 0;
     char c;
     while (m < n) {
         while ((c = fgetc(fd)) != '\n');

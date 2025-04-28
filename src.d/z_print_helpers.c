@@ -24,14 +24,14 @@
 
 // Header
 void print_header(const char *fmt,
-                   INT nrow,
-                   INT ncol,
-                   INT nnz,
+                   SESP_INT nrow,
+                   SESP_INT ncol,
+                   SESP_INT nnz,
                    double density) {
     printf("\n%s\n", "---   SESP PRINTER   ---");
     printf("FORMAT: %s\n", fmt);
-    printf("SHAPE: %lu x %lu\n", (INT_M)nrow, (INT_M)ncol);
-    printf("NNZ: %lu\n", (INT_M)nnz);
+    printf("SHAPE: %lu x %lu\n", (SESP_MAXINT)nrow, (SESP_MAXINT)ncol);
+    printf("NNZ: %lu\n", (SESP_MAXINT)nnz);
     printf("DENSITY: %d %c\n\n", (int)(100*density), 37);
 }
 
@@ -39,10 +39,10 @@ void print_header(const char *fmt,
 void print_sparse(const sesp_coo *A, const char *fmt) {
     print_header(fmt, A->nrow, A->ncol, A->nnz, A->density);
     printf(" %s        %s            %s\n\n", "ROW", "COL", "VALUE");
-    for (INT k=0; k<A->nnz; k++) {
+    for (SESP_INT k=0; k<A->nnz; k++) {
         printf(" %10lu %10lu     %+1.3E%+1.3E*I\n",
-               (INT_M)A->rowis[k],
-               (INT_M)A->colis[k],
+               (SESP_MAXINT)A->rowis[k],
+               (SESP_MAXINT)A->colis[k],
                creal(A->data[k]),
                cimag(A->data[k]));
     }

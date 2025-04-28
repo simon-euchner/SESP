@@ -24,7 +24,7 @@
 
 // Save DEN
 void sesp_den_save(const char *file, const sesp_den *A) {
-    FILE *fd; INT k;
+    FILE *fd; SESP_INT k;
     if (!(fd = fopen(file, "w"))) {
         printf("SESP: Cannot open file *%s* for writing\n", file);
         exit(1);
@@ -39,8 +39,8 @@ void sesp_den_save(const char *file, const sesp_den *A) {
     for (k=0; k<A->nnz; k++) {
         fprintf(fd,
                 "%19lu %19lu %+1.10E %+1.10E\n",
-                (INT_M)k/A->ncol,
-                (INT_M)k%A->ncol,
+                (SESP_MAXINT)k/A->ncol,
+                (SESP_MAXINT)k%A->ncol,
                 creal(A->data[k]),
                 cimag(A->data[k]));
     }

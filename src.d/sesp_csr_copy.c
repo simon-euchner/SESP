@@ -23,7 +23,7 @@
 
 
 sesp_csr *sesp_csr_copy(const sesp_csr *A) {
-    INT k; sesp_csr *B; B= sesp_csr_alloc(A->nrow, A->ncol, A->nnz);
+    SESP_INT k; sesp_csr *B; B= sesp_csr_alloc(A->nrow, A->ncol, A->nnz);
     for (k=0; k<A->nrow+1; k++)
         B->rowps[k] = A->rowps[k];
     for (k=0; k<A->nnz; k++) {

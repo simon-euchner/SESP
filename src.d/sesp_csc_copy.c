@@ -23,7 +23,7 @@
 
 
 sesp_csc *sesp_csc_copy(const sesp_csc *A) {
-    sesp_csc *B; INT k; B = sesp_csc_alloc(A->nrow, A->ncol, A->nnz);
+    sesp_csc *B; SESP_INT k; B = sesp_csc_alloc(A->nrow, A->ncol, A->nnz);
     for (k=0; k<A->ncol+1; k++) B->colps[k] = A->colps[k];
     for (k=0; k<A->nnz; k++) {
         B->rowis[k] = A->rowis[k];

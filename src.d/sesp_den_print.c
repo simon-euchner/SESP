@@ -25,7 +25,7 @@
 void sesp_den_print(const sesp_den *A) {
     print_header("DEN", A->nrow, A->ncol, A->nnz, A->density);
     printf("%s\n\n", "ARRAY:");
-    INT i, j, k;
+    SESP_INT i, j, k;
     for (i=0; i<A->nrow; i++) {
         k = A->ncol*i;
         for (j=0; j<A->ncol; j++) {

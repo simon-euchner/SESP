@@ -22,11 +22,11 @@
 #include "../inc.d/sesp.h"
 
 
-sesp_coo *sesp_coo_clean(sesp_coo *A, REAL_M epsilon) {
-    if (epsilon < SMALL) epsilon = (REAL_M)SMALL;
+sesp_coo *sesp_coo_clean(sesp_coo *A, SESP_MAXREAL epsilon) {
+    if (epsilon < SMALL) epsilon = (SESP_MAXREAL)SMALL;
     sesp_coo *B = sesp_coo_alloc(A->nrow, A->ncol, A->nnz); B->nnz = 0;
-    for (INT k=0; k<A->nnz; k++) {
-        if (cabsl((DTYPE_M)A->data[k]) < epsilon) continue;
+    for (SESP_INT k=0; k<A->nnz; k++) {
+        if (cabsl((SESP_MAXDTYPE)A->data[k]) < epsilon) continue;
         B->rowis[k] = A->rowis[k];
         B->colis[k] = A->colis[k];
         B->data[k] = A->data[k];
@@ -35,9 +35,9 @@ sesp_coo *sesp_coo_clean(sesp_coo *A, REAL_M epsilon) {
     sesp_coo_free(A);
     B->density = (double)B->nnz/(double)(B->nrow*B->ncol);
     if (B->nnz) {
-        B->rowis = (INT *)realloc(B->rowis, sizeof(INT)*B->nnz);
-        B->colis = (INT *)realloc(B->colis, sizeof(INT)*B->nnz);
-        B->data = (DTYPE *)realloc(B->data, sizeof(DTYPE)*B->nnz);
+        B->rowis = (SESP_INT *)realloc(B->rowis, sizeof(SESP_INT)*B->nnz);
+        B->colis = (SESP_INT *)realloc(B->colis, sizeof(SESP_INT)*B->nnz);
+        B->data = (SESP_DTYPE *)realloc(B->data, sizeof(SESP_DTYPE)*B->nnz);
     } else {
         B->rowis = NULL;
         B->colis = NULL;

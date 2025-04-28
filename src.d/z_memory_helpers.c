@@ -23,7 +23,7 @@
 
 
 // Check input validity
-int check_valid(INT nrow, INT ncol, INT nnz) {
+int check_valid(SESP_INT nrow, SESP_INT ncol, SESP_INT nnz) {
     if (!(nrow && ncol)) return 1;
     if (nnz > nrow*ncol) return 1;
     return 0;

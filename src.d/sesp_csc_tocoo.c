@@ -64,7 +64,7 @@ sesp_coo *sesp_csc_tocoo(sesp_csc *A) {
 void sesp_csc_tocoo_worker(sesp_coo *C) {
 
     // Sort
-    INT k;
+    SESP_INT k;
     if (C->nnz) {
 
         // Prepare data for qsort

@@ -24,6 +24,6 @@
 
 sesp_den *sesp_den_copy(const sesp_den *A) {
     sesp_den *B = sesp_den_alloc(A->nrow, A->ncol);
-    for (INT k=0; k<A->nnz; k++) B->data[k] = A->data[k];
+    for (SESP_INT k=0; k<A->nnz; k++) B->data[k] = A->data[k];
     return B;
 }

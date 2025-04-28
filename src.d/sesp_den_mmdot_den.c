@@ -23,7 +23,7 @@
 
 
 sesp_den *sesp_den_mmdot_den(const sesp_den *A, const sesp_den *B) {
-    INT i, j, k, l; sesp_den *C;
+    SESP_INT i, j, k, l; sesp_den *C;
     if (A->ncol != B->nrow) {
         printf("%s\n", "SESP: Shape error in *sesp_den_mmdot_den*");
         exit(1);
@@ -31,7 +31,7 @@ sesp_den *sesp_den_mmdot_den(const sesp_den *A, const sesp_den *B) {
     C = sesp_den_alloc(A->nrow, B->ncol);
     for (i=0; i<C->nrow; i++) {
         for (j=0; j<C->ncol; j++) {
-            C->data[i*C->ncol+j] = (DTYPE)0;
+            C->data[i*C->ncol+j] = (SESP_DTYPE)0;
             l = i*A->ncol;
             for (k=0; k<A->ncol; k++) {
                 C->data[i*C->ncol+j] += A->data[l+k] * B->data[k*B->ncol+j];

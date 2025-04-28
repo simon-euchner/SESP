@@ -23,8 +23,8 @@
 
 
 void sesp_coo_t(sesp_coo *A) {
-    INT i; qsort_data *array;
-    array = (qsort_data *)malloc(sizeof(qsort_data)); 
+    SESP_INT i; qsort_data *array;
+    array = (qsort_data *)malloc(sizeof(qsort_data));
     for (i=0; i<A->nnz; i++) {
         array[i].a = A->colis[i];
         array[i].b = A->rowis[i];

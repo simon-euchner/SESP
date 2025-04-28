@@ -23,6 +23,6 @@
 
 
 // A -> alpha * A
-void sesp_den_scal(DTYPE alpha, sesp_den *A) {
-    for (INT k=0; k<A->nnz; k++) A->data[k] *= alpha;
+void sesp_den_scal(SESP_DTYPE alpha, sesp_den *A) {
+    for (SESP_INT k=0; k<A->nnz; k++) A->data[k] *= alpha;
 }

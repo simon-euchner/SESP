@@ -23,8 +23,8 @@
 
 
 // w -> w + A * v
-void sesp_csr_mvdot_arr(const sesp_csr *A, const DTYPE *v, DTYPE *w) {
-    INT i, j, k; k=0;
+void sesp_csr_mvdot_arr(const sesp_csr *A, const SESP_DTYPE *v, SESP_DTYPE *w) {
+    SESP_INT i, j, k; k=0;
     for (i=0; i<A->nrow; i++) {
         j = A->rowps[i+1];
         while (k < j){

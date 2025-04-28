@@ -23,7 +23,7 @@
 
 
 // Allocator for DEN
-sesp_den *sesp_den_alloc(INT nrow, INT ncol) {
+sesp_den *sesp_den_alloc(SESP_INT nrow, SESP_INT ncol) {
 
     // Input sanity check
     if (check_valid(nrow, ncol, 0)) {
@@ -41,7 +41,7 @@ sesp_den *sesp_den_alloc(INT nrow, INT ncol) {
     A->density = 1.;
 
     // Allocate memory
-    DTYPE *data = (DTYPE *)malloc(sizeof(DTYPE)*A->nnz);
+    SESP_DTYPE *data = (SESP_DTYPE *)malloc(sizeof(SESP_DTYPE)*A->nnz);
     if (!data) {
         printf("%s\n", "SESP: Requested memory cannot be allocated");
         exit(1);

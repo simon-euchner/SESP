@@ -25,8 +25,8 @@
 sesp_csr *sesp_csr_mmdot_csc(const sesp_csr *A, const sesp_csc *B) {
 
     // Declarations
-    INT nnz, nnzrs, nnzcs, i, j, nr_min, nr_max, nc_min, nc_max, k, l, rp;
-    DTYPE sum;
+    SESP_INT nnz, nnzrs, nnzcs, i, j, nr_min, nr_max, nc_min, nc_max, k, l, rp;
+    SESP_DTYPE sum;
     sesp_csr *C;
 
     // Check dimensions
@@ -34,7 +34,7 @@ sesp_csr *sesp_csr_mmdot_csc(const sesp_csr *A, const sesp_csc *B) {
         printf("%s\n", "SESP: Shape error in *sesp_csr_mmdot_csc*");
         exit(1);
     }
-     
+
     // Allocate worst case memory
     nnzrs = nnzcs = 0;
     for (i=0; i<A->nrow+1; i++) { if (A->rowps[i+1]-A->rowps[i]) nnzrs++; }
@@ -51,7 +51,7 @@ sesp_csr *sesp_csr_mmdot_csc(const sesp_csr *A, const sesp_csc *B) {
         for (j=0; j<B->ncol; j++) {
             nc_min = B->colps[j];
             nc_max = B->colps[j+1];
-            k = nr_min; l = nc_min; sum = (DTYPE)0;
+            k = nr_min; l = nc_min; sum = (SESP_DTYPE)0;
             while ((k < nr_max) && (l < nc_max)) {
                 if (A->colis[k] < B->rowis[l]) { k++; continue; }
                 if (A->colis[k] > B->rowis[l]) { l++; continue; }
@@ -60,7 +60,7 @@ sesp_csr *sesp_csr_mmdot_csc(const sesp_csr *A, const sesp_csc *B) {
                     k++; l++;
                 }
             }
-            if (!(cabsl((DTYPE_M)sum) < SMALL)) {
+            if (!(cabsl((SESP_MAXDTYPE)sum) < SMALL)) {
                 C->colis[nnz] = j;
                 C->data[nnz++] = sum;
                 rp++;
@@ -72,8 +72,8 @@ sesp_csr *sesp_csr_mmdot_csc(const sesp_csr *A, const sesp_csc *B) {
     // Reallocate to (hopefully) less than worst case size
     C->nnz = nnz; C->density = (double)nnz/(double)(C->nrow*C->ncol);
     if (nnz) {
-        C->colis = (INT *)realloc(C->colis, sizeof(INT)*nnz);
-        C->data = (DTYPE *)realloc(C->data, sizeof(DTYPE)*nnz);
+        C->colis = (SESP_INT *)realloc(C->colis, sizeof(SESP_INT)*nnz);
+        C->data = (SESP_DTYPE *)realloc(C->data, sizeof(SESP_DTYPE)*nnz);
     } else {
         C->colis = NULL;
         C->data = NULL;

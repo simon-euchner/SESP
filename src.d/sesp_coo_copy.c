@@ -24,7 +24,7 @@
 
 sesp_coo *sesp_coo_copy(const sesp_coo *A) {
     sesp_coo *B = sesp_coo_alloc(A->nrow, A->ncol, A->nnz);
-    for (INT k=0; k<A->nnz; k++) {
+    for (SESP_INT k=0; k<A->nnz; k++) {
         B->rowis[k] = A->rowis[k];
         B->colis[k] = A->colis[k];
         B->data[k] = A->data[k];

@@ -24,7 +24,7 @@
 
 // Save COO
 void sesp_coo_save(const char *file, const sesp_coo *A) {
-    FILE *fd; INT k;
+    FILE *fd; SESP_INT k;
     if (!(fd = fopen(file, "w"))) {
         printf("SESP: Cannot open file *%s* for writing\n", file);
         exit(1);
@@ -39,8 +39,8 @@ void sesp_coo_save(const char *file, const sesp_coo *A) {
     for (k=0; k<A->nnz; k++) {
         fprintf(fd,
                 "%19lu %19lu %+1.10E %+1.10E\n",
-                (INT_M)A->rowis[k],
-                (INT_M)A->colis[k],
+                (SESP_MAXINT)A->rowis[k],
+                (SESP_MAXINT)A->colis[k],
                 creal(A->data[k]),
                 cimag(A->data[k]));
     }
