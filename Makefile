@@ -31,7 +31,8 @@ OBJ = ./obj.d
 LIB = ./lib.d
 
 # Target (library *sesp*)
-TARGET = ${LIB}/libsesp.so
+TARGET_DYN = ${LIB}/libsesp.so
+TARGET_STA = ${LIB}/libsesp.a
 
 # Define file names
 F01 = sesp_den_tocoo
@@ -113,77 +114,15 @@ OBJ_FILES = ${foreach file, ${OBJ_FILENAMES}, ${OBJ}/${file}}
 
 
 ### Print info
-all: ${TARGET}
+all: ${TARGET_DYN} ${TARGET_STA}
 	@echo -e "\nBuilding process completed successfully.\n"
 
 
 ### Link
-${TARGET}: ${OBJ_FILES}
-	${LD} ${OLVL} -o ${LIB}/libsesp.so \
-	                    ${OBJ}/${F01}.o \
-	                    ${OBJ}/${F02}.o \
-	                    ${OBJ}/${F03}.o \
-	                    ${OBJ}/${F04}.o \
-	                    ${OBJ}/${F05}.o \
-	                    ${OBJ}/${F06}.o \
-	                    ${OBJ}/${F07}.o \
-	                    ${OBJ}/${F08}.o \
-	                    ${OBJ}/${F09}.o \
-	                    ${OBJ}/${F10}.o \
-	                    ${OBJ}/${F11}.o \
-	                    ${OBJ}/${F12}.o \
-	                    ${OBJ}/${F13}.o \
-	                    ${OBJ}/${F14}.o \
-	                    ${OBJ}/${F15}.o \
-	                    ${OBJ}/${F16}.o \
-	                    ${OBJ}/${F17}.o \
-	                    ${OBJ}/${F18}.o \
-	                    ${OBJ}/${F19}.o \
-	                    ${OBJ}/${F20}.o \
-	                    ${OBJ}/${F21}.o \
-	                    ${OBJ}/${F22}.o \
-	                    ${OBJ}/${F23}.o \
-	                    ${OBJ}/${F24}.o \
-	                    ${OBJ}/${F25}.o \
-	                    ${OBJ}/${F26}.o \
-	                    ${OBJ}/${F27}.o \
-	                    ${OBJ}/${F28}.o \
-	                    ${OBJ}/${F29}.o \
-						${OBJ}/${F30}.o \
-						${OBJ}/${F31}.o \
-	                    ${OBJ}/${F32}.o \
-	                    ${OBJ}/${F33}.o \
-	                    ${OBJ}/${F34}.o \
-	                    ${OBJ}/${F35}.o \
-	                    ${OBJ}/${F36}.o \
-	                    ${OBJ}/${F37}.o \
-	                    ${OBJ}/${F38}.o \
-	                    ${OBJ}/${F39}.o \
-	                    ${OBJ}/${F40}.o \
-	                    ${OBJ}/${F41}.o \
-	                    ${OBJ}/${F42}.o \
-	                    ${OBJ}/${F43}.o \
-	                    ${OBJ}/${F44}.o \
-	                    ${OBJ}/${F45}.o \
-	                    ${OBJ}/${F46}.o \
-	                    ${OBJ}/${F47}.o \
-	                    ${OBJ}/${F48}.o \
-	                    ${OBJ}/${F49}.o \
-	                    ${OBJ}/${F50}.o \
-	                    ${OBJ}/${F51}.o \
-	                    ${OBJ}/${F52}.o \
-	                    ${OBJ}/${F53}.o \
-	                    ${OBJ}/${F54}.o \
-	                    ${OBJ}/${F55}.o \
-	                    ${OBJ}/${F56}.o \
-	                    ${OBJ}/${F57}.o \
-	                    ${OBJ}/${F58}.o \
-	                    ${OBJ}/${F59}.o \
-	                    ${OBJ}/${F60}.o \
-	                    ${OBJ}/${F61}.o \
-	                    ${OBJ}/${F62}.o \
-	                    ${OBJ}/${F63}.o \
-			    -lm
+${TARGET_DYN}: ${OBJ_FILES}
+	${LD} ${OLVL} -o ${LIB}/libsesp.so ${OBJ}/${F01}.o ${OBJ}/${F02}.o ${OBJ}/${F03}.o ${OBJ}/${F04}.o ${OBJ}/${F05}.o ${OBJ}/${F06}.o ${OBJ}/${F07}.o ${OBJ}/${F08}.o ${OBJ}/${F09}.o ${OBJ}/${F10}.o ${OBJ}/${F11}.o ${OBJ}/${F12}.o ${OBJ}/${F13}.o ${OBJ}/${F14}.o ${OBJ}/${F15}.o ${OBJ}/${F16}.o ${OBJ}/${F17}.o ${OBJ}/${F18}.o ${OBJ}/${F19}.o ${OBJ}/${F20}.o ${OBJ}/${F21}.o ${OBJ}/${F22}.o ${OBJ}/${F23}.o ${OBJ}/${F24}.o ${OBJ}/${F25}.o ${OBJ}/${F26}.o ${OBJ}/${F27}.o ${OBJ}/${F28}.o ${OBJ}/${F29}.o ${OBJ}/${F30}.o ${OBJ}/${F31}.o ${OBJ}/${F32}.o ${OBJ}/${F33}.o ${OBJ}/${F34}.o ${OBJ}/${F35}.o ${OBJ}/${F36}.o ${OBJ}/${F37}.o ${OBJ}/${F38}.o ${OBJ}/${F39}.o ${OBJ}/${F40}.o ${OBJ}/${F41}.o ${OBJ}/${F42}.o ${OBJ}/${F43}.o ${OBJ}/${F44}.o ${OBJ}/${F45}.o ${OBJ}/${F46}.o ${OBJ}/${F47}.o ${OBJ}/${F48}.o ${OBJ}/${F49}.o ${OBJ}/${F50}.o ${OBJ}/${F51}.o ${OBJ}/${F52}.o ${OBJ}/${F53}.o ${OBJ}/${F54}.o ${OBJ}/${F55}.o ${OBJ}/${F56}.o ${OBJ}/${F57}.o ${OBJ}/${F58}.o ${OBJ}/${F59}.o ${OBJ}/${F60}.o ${OBJ}/${F61}.o ${OBJ}/${F62}.o ${OBJ}/${F63}.o -lm
+${TARGET_STA}: ${OBJ_FILES}
+	ar rcs ${LIB}/libsesp.a ${OBJ}/${F01}.o ${OBJ}/${F02}.o ${OBJ}/${F03}.o ${OBJ}/${F04}.o ${OBJ}/${F05}.o ${OBJ}/${F06}.o ${OBJ}/${F07}.o ${OBJ}/${F08}.o ${OBJ}/${F09}.o ${OBJ}/${F10}.o ${OBJ}/${F11}.o ${OBJ}/${F12}.o ${OBJ}/${F13}.o ${OBJ}/${F14}.o ${OBJ}/${F15}.o ${OBJ}/${F16}.o ${OBJ}/${F17}.o ${OBJ}/${F18}.o ${OBJ}/${F19}.o ${OBJ}/${F20}.o ${OBJ}/${F21}.o ${OBJ}/${F22}.o ${OBJ}/${F23}.o ${OBJ}/${F24}.o ${OBJ}/${F25}.o ${OBJ}/${F26}.o ${OBJ}/${F27}.o ${OBJ}/${F28}.o ${OBJ}/${F29}.o ${OBJ}/${F30}.o ${OBJ}/${F31}.o ${OBJ}/${F32}.o ${OBJ}/${F33}.o ${OBJ}/${F34}.o ${OBJ}/${F35}.o ${OBJ}/${F36}.o ${OBJ}/${F37}.o ${OBJ}/${F38}.o ${OBJ}/${F39}.o ${OBJ}/${F40}.o ${OBJ}/${F41}.o ${OBJ}/${F42}.o ${OBJ}/${F43}.o ${OBJ}/${F44}.o ${OBJ}/${F45}.o ${OBJ}/${F46}.o ${OBJ}/${F47}.o ${OBJ}/${F48}.o ${OBJ}/${F49}.o ${OBJ}/${F50}.o ${OBJ}/${F51}.o ${OBJ}/${F52}.o ${OBJ}/${F53}.o ${OBJ}/${F54}.o ${OBJ}/${F55}.o ${OBJ}/${F56}.o ${OBJ}/${F57}.o ${OBJ}/${F58}.o ${OBJ}/${F59}.o ${OBJ}/${F60}.o ${OBJ}/${F61}.o ${OBJ}/${F62}.o ${OBJ}/${F63}.o -lm
 
 
 ### Compile
@@ -446,5 +385,6 @@ ${OBJ}/${F63}.o: ${SRC}/${F63}.c
 clean:
 	rm ${OBJ}/*.o
 	rm ${LIB}/libsesp.so
+	rm ${LIB}/libsesp.a
 
 .PHONY: clean

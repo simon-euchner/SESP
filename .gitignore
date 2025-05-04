@@ -1,5 +1,6 @@
 *.o
 *.so
+*.a
 *.out
 /tst.d/*.den
 /tst.d/*.coo
